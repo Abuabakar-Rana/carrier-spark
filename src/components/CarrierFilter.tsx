@@ -96,14 +96,14 @@ export const CarrierFilter: React.FC = () => {
               <div className="space-y-2">
                 <Label htmlFor="carrierOp">Carrier Operation</Label>
                 <Select
-                  value={filters.carrierOp || ''}
-                  onValueChange={(value) => handleInputChange('carrierOp', value)}
+                  value={filters.carrierOp || 'all'}
+                  onValueChange={(value) => handleInputChange('carrierOp', value === 'all' ? undefined : value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select operation type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All</SelectItem>
+                    <SelectItem value="all">All</SelectItem>
                     {CARRIER_OPERATIONS.map(op => (
                       <SelectItem key={op} value={op}>{op}</SelectItem>
                     ))}
@@ -138,14 +138,14 @@ export const CarrierFilter: React.FC = () => {
               <div className="space-y-2">
                 <Label htmlFor="classDef">Class Definition</Label>
                 <Select
-                  value={filters.classDef || ''}
-                  onValueChange={(value) => handleInputChange('classDef', value)}
+                  value={filters.classDef || 'all'}
+                  onValueChange={(value) => handleInputChange('classDef', value === 'all' ? undefined : value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select class definition" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All</SelectItem>
+                    <SelectItem value="all">All</SelectItem>
                     {CLASS_DEFINITIONS.map(classDef => (
                       <SelectItem key={classDef} value={classDef}>{classDef}</SelectItem>
                     ))}
@@ -156,14 +156,14 @@ export const CarrierFilter: React.FC = () => {
               <div className="space-y-2">
                 <Label htmlFor="state">State</Label>
                 <Select
-                  value={filters.state || ''}
-                  onValueChange={(value) => handleInputChange('state', value)}
+                  value={filters.state || 'all'}
+                  onValueChange={(value) => handleInputChange('state', value === 'all' ? undefined : value)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select state" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All States</SelectItem>
+                    <SelectItem value="all">All States</SelectItem>
                     {US_STATES.map(state => (
                       <SelectItem key={state} value={state}>{state}</SelectItem>
                     ))}
