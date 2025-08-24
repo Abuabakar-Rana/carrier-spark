@@ -14,7 +14,135 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      carrier_data: {
+        Row: {
+          business_org_desc: string | null
+          carrier_mailing_city: string | null
+          carrier_mailing_cnty: string | null
+          carrier_mailing_country: string | null
+          carrier_mailing_state: string | null
+          carrier_mailing_street: string | null
+          carrier_mailing_zip: string | null
+          carrier_operation: string | null
+          cell_phone: string | null
+          classdef: string | null
+          company_officer_1: string | null
+          company_officer_2: string | null
+          created_at: string | null
+          dba_name: string | null
+          dot_number: string | null
+          email_address: string | null
+          fax: string | null
+          id: string
+          legal_name: string | null
+          phone: string | null
+          phy_city: string | null
+          phy_country: string | null
+          phy_state: string | null
+          phy_street: string | null
+          phy_zip: string | null
+          power_units: number | null
+          total_drivers: number | null
+          total_intrastate_drivers: number | null
+          truck_units: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          business_org_desc?: string | null
+          carrier_mailing_city?: string | null
+          carrier_mailing_cnty?: string | null
+          carrier_mailing_country?: string | null
+          carrier_mailing_state?: string | null
+          carrier_mailing_street?: string | null
+          carrier_mailing_zip?: string | null
+          carrier_operation?: string | null
+          cell_phone?: string | null
+          classdef?: string | null
+          company_officer_1?: string | null
+          company_officer_2?: string | null
+          created_at?: string | null
+          dba_name?: string | null
+          dot_number?: string | null
+          email_address?: string | null
+          fax?: string | null
+          id?: string
+          legal_name?: string | null
+          phone?: string | null
+          phy_city?: string | null
+          phy_country?: string | null
+          phy_state?: string | null
+          phy_street?: string | null
+          phy_zip?: string | null
+          power_units?: number | null
+          total_drivers?: number | null
+          total_intrastate_drivers?: number | null
+          truck_units?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          business_org_desc?: string | null
+          carrier_mailing_city?: string | null
+          carrier_mailing_cnty?: string | null
+          carrier_mailing_country?: string | null
+          carrier_mailing_state?: string | null
+          carrier_mailing_street?: string | null
+          carrier_mailing_zip?: string | null
+          carrier_operation?: string | null
+          cell_phone?: string | null
+          classdef?: string | null
+          company_officer_1?: string | null
+          company_officer_2?: string | null
+          created_at?: string | null
+          dba_name?: string | null
+          dot_number?: string | null
+          email_address?: string | null
+          fax?: string | null
+          id?: string
+          legal_name?: string | null
+          phone?: string | null
+          phy_city?: string | null
+          phy_country?: string | null
+          phy_state?: string | null
+          phy_street?: string | null
+          phy_zip?: string | null
+          power_units?: number | null
+          total_drivers?: number | null
+          total_intrastate_drivers?: number | null
+          truck_units?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          full_name: string | null
+          id: string
+          role: string
+          updated_at: string | null
+          user_id: string
+          username: string
+        }
+        Insert: {
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string | null
+          user_id: string
+          username: string
+        }
+        Update: {
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string | null
+          user_id?: string
+          username?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
