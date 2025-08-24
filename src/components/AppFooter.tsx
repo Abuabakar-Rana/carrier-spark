@@ -78,7 +78,7 @@ export const AppFooter: React.FC = () => {
         {/* Bottom Bar */}
         <div className="mt-8 pt-6 border-t border-border/50 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-xs text-muted-foreground">
-            © 2024 Carrier Filter Pro. Crafted with precision and passion.
+            Latest Carrier Data Services for Sales and OutReach Developed by Nestnic solutions
           </div>
           <div className="flex items-center space-x-6 text-xs text-muted-foreground">
             <span className="hover:text-foreground transition-colors cursor-pointer">Privacy Policy</span>

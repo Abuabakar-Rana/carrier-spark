@@ -1,11 +1,34 @@
-import Papa from 'papaparse';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface CarrierData {
-  CARRIER_OP: string;
-  POWER_UNITS: number;
-  TOTAL_DRIVERS: number;
-  CLASS_DEF: string;
-  STATE: string;
+  id: string;
+  dot_number?: string;
+  carrier_operation?: string;
+  phone?: string;
+  fax?: string;
+  cell_phone?: string;
+  company_officer_1?: string;
+  company_officer_2?: string;
+  business_org_desc?: string;
+  truck_units?: number;
+  power_units?: number;
+  total_intrastate_drivers?: number;
+  total_drivers?: number;
+  classdef?: string;
+  legal_name?: string;
+  dba_name?: string;
+  phy_street?: string;
+  phy_city?: string;
+  phy_country?: string;
+  phy_state?: string;
+  phy_zip?: string;
+  carrier_mailing_street?: string;
+  carrier_mailing_state?: string;
+  carrier_mailing_city?: string;
+  carrier_mailing_country?: string;
+  carrier_mailing_zip?: string;
+  carrier_mailing_cnty?: string;
+  email_address?: string;
 }
 
 export interface FilterParams {
@@ -37,98 +60,51 @@ export async function filterCarriers(params: FilterParams): Promise<FilterRespon
   try {
     console.log('Filtering carriers with params:', params);
     
-    const response = await fetch('/data/filtered_carrier_data.csv');
-    if (!response.ok) {
-      throw new Error('Failed to fetch CSV file');
+    let query = supabase
+      .from('carrier_data')
+      .select('*', { count: 'exact' });
+    
+    // Apply filters
+    if (params.carrierOp) {
+      query = query.ilike('carrier_operation', `%${params.carrierOp}%`);
     }
     
-    const csvText = await response.text();
+    if (params.powerUnits !== undefined && params.powerUnits > 0) {
+      query = query.gte('power_units', params.powerUnits);
+    }
     
-    return new Promise((resolve, reject) => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        transformHeader: (header: string) => header.trim().toUpperCase(),
-        transform: (value: string, header: string) => {
-          const trimmedValue = value.trim();
-          if (header === 'POWER_UNITS' || header === 'TOTAL_DRIVERS') {
-            return parseInt(trimmedValue, 10);
-          }
-          return trimmedValue;
-        },
-        complete: (results) => {
-          try {
-            if (results.errors.length > 0) {
-              console.error('CSV parse errors:', results.errors);
-              resolve({
-                count: 0,
-                data: [],
-                error: 'Error parsing CSV file'
-              });
-              return;
-            }
+    if (params.totalDrivers !== undefined && params.totalDrivers > 0) {
+      query = query.gte('total_drivers', params.totalDrivers);
+    }
+    
+    if (params.classDef) {
+      query = query.ilike('classdef', `%${params.classDef}%`);
+    }
+    
+    if (params.state) {
+      query = query.ilike('phy_state', params.state);
+    }
 
-            let filteredData = results.data as CarrierData[];
-            
-            // Apply filters
-            if (params.carrierOp) {
-              filteredData = filteredData.filter(row => 
-                row.CARRIER_OP?.toLowerCase() === params.carrierOp?.toLowerCase()
-              );
-            }
-            
-            if (params.powerUnits !== undefined && params.powerUnits > 0) {
-              filteredData = filteredData.filter(row => 
-                row.POWER_UNITS >= params.powerUnits!
-              );
-            }
-            
-            if (params.totalDrivers !== undefined && params.totalDrivers > 0) {
-              filteredData = filteredData.filter(row => 
-                row.TOTAL_DRIVERS >= params.totalDrivers!
-              );
-            }
-            
-            if (params.classDef) {
-              filteredData = filteredData.filter(row => 
-                row.CLASS_DEF?.toLowerCase() === params.classDef?.toLowerCase()
-              );
-            }
-            
-            if (params.state) {
-              filteredData = filteredData.filter(row => 
-                row.STATE?.toLowerCase() === params.state?.toLowerCase()
-              );
-            }
-
-            // Limit to 50 rows
-            const limitedData = filteredData.slice(0, 50);
-            
-            console.log(`Filtered ${filteredData.length} results, returning ${limitedData.length}`);
-            
-            resolve({
-              count: filteredData.length,
-              data: limitedData
-            });
-          } catch (error) {
-            console.error('Error filtering data:', error);
-            resolve({
-              count: 0,
-              data: [],
-              error: 'Error processing filter parameters'
-            });
-          }
-        },
-        error: (error) => {
-          console.error('Papa parse error:', error);
-          resolve({
-            count: 0,
-            data: [],
-            error: 'Failed to parse CSV file'
-          });
-        }
-      });
-    });
+    // Limit to 50 rows
+    query = query.limit(50);
+    
+    const { data, error, count } = await query;
+    
+    if (error) {
+      console.error('Database error:', error);
+      return {
+        count: 0,
+        data: [],
+        error: 'Failed to fetch carrier data'
+      };
+    }
+    
+    console.log(`Found ${count} total results, returning ${data?.length || 0} rows`);
+    
+    return {
+      count: count || 0,
+      data: data || []
+    };
   } catch (error) {
     console.error('Service error:', error);
     return {

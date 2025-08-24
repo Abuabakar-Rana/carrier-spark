@@ -88,33 +88,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signIn = async (username: string, password: string) => {
     try {
-      // Find user by username first
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('username', username)
-        .maybeSingle();
-
-      if (profileError || !profileData) {
-        return { error: { message: 'Invalid username or password' } };
-      }
-
-      // Get the user's email from auth.users (we need to use RPC for this)
-      const { data: userData, error: userError } = await supabase.rpc('get_user_email_by_id', {
-        user_id: profileData.user_id
-      });
-
-      if (userError || !userData) {
-        // Fallback: try signing in with username as email
-        const { error } = await supabase.auth.signInWithPassword({
-          email: username,
-          password: password,
-        });
-        return { error };
-      }
-
+      // For now, treat username as email for simplicity
+      // Admin will need to create users with email as username
       const { error } = await supabase.auth.signInWithPassword({
-        email: userData,
+        email: username,
         password: password,
       });
 

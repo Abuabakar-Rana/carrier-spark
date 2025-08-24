@@ -41,13 +41,44 @@ export const CarrierFilter: React.FC = () => {
       return;
     }
 
-    const csvHeaders = ['Carrier Operation', 'Power Units', 'Total Drivers', 'Class Definition', 'State'];
+    const csvHeaders = [
+      'DOT Number', 'Carrier Operation', 'Phone', 'Fax', 'Cell Phone', 
+      'Company Officer 1', 'Company Officer 2', 'Business Org Description',
+      'Truck Units', 'Power Units', 'Total Intrastate Drivers', 'Total Drivers',
+      'Class Definition', 'Legal Name', 'DBA Name', 'Physical Street', 'Physical City',
+      'Physical Country', 'Physical State', 'Physical Zip', 'Mailing Street',
+      'Mailing State', 'Mailing City', 'Mailing Country', 'Mailing Zip',
+      'Mailing County', 'Email Address'
+    ];
+    
     const csvData = results.map(row => [
-      row.CARRIER_OP,
-      row.POWER_UNITS,
-      row.TOTAL_DRIVERS,
-      row.CLASS_DEF,
-      row.STATE
+      row.dot_number || '',
+      row.carrier_operation || '',
+      row.phone || '',
+      row.fax || '',
+      row.cell_phone || '',
+      row.company_officer_1 || '',
+      row.company_officer_2 || '',
+      row.business_org_desc || '',
+      row.truck_units || '',
+      row.power_units || '',
+      row.total_intrastate_drivers || '',
+      row.total_drivers || '',
+      row.classdef || '',
+      row.legal_name || '',
+      row.dba_name || '',
+      row.phy_street || '',
+      row.phy_city || '',
+      row.phy_country || '',
+      row.phy_state || '',
+      row.phy_zip || '',
+      row.carrier_mailing_street || '',
+      row.carrier_mailing_state || '',
+      row.carrier_mailing_city || '',
+      row.carrier_mailing_country || '',
+      row.carrier_mailing_zip || '',
+      row.carrier_mailing_cnty || '',
+      row.email_address || ''
     ]);
 
     const csvContent = [
