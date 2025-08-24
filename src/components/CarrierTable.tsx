@@ -73,27 +73,27 @@ export const CarrierTable: React.FC<CarrierTableProps> = ({ data }) => {
               >
                 <TableCell className="font-medium">
                   <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                    carrier.carrier_operation === 'Interstate' 
+                    carrier.CARRIER_OP === 'Interstate' 
                       ? 'bg-primary/10 text-primary border border-primary/20' 
                       : 'bg-accent/10 text-accent border border-accent/20'
                   }`}>
-                    {carrier.carrier_operation}
+                    {carrier.CARRIER_OP}
                   </span>
                 </TableCell>
-                <TableCell className="text-right font-mono font-medium">{carrier.power_units?.toLocaleString() || 0}</TableCell>
-                <TableCell className="text-right font-mono font-medium">{carrier.total_drivers?.toLocaleString() || 0}</TableCell>
+                <TableCell className="text-right font-mono font-medium">{carrier.POWER_UNITS.toLocaleString()}</TableCell>
+                <TableCell className="text-right font-mono font-medium">{carrier.TOTAL_DRIVERS.toLocaleString()}</TableCell>
                 <TableCell>
                   <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                    carrier.classdef === 'For-hire' 
+                    carrier.CLASS_DEF === 'For-hire' 
                       ? 'bg-green-500/10 text-green-400 border border-green-500/20' 
                       : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
                   }`}>
-                    {carrier.classdef}
+                    {carrier.CLASS_DEF}
                   </span>
                 </TableCell>
                 <TableCell>
                   <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-secondary/50 text-foreground border border-border/50">
-                    {carrier.phy_state}
+                    {carrier.STATE}
                   </span>
                 </TableCell>
               </TableRow>
