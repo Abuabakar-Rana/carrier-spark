@@ -88,10 +88,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signIn = async (username: string, password: string) => {
     try {
-      // For now, treat username as email for simplicity
-      // Admin will need to create users with email as username
+      // Handle admin login with specific credentials
+      if (username === 'Nestnic Solutions') {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: 'nestnic@admin.com',
+          password: password,
+        });
+        return { error };
+      }
+      
+      // For regular users, treat username as email for now
+      // Admin can create users with email format: username@carrier-data.com
+      const email = username.includes('@') ? username : `${username.toLowerCase().replace(/\s+/g, '')}@carrier-data.com`;
+      
       const { error } = await supabase.auth.signInWithPassword({
-        email: username,
+        email: email,
         password: password,
       });
 
